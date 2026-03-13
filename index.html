@@ -36,13 +36,26 @@ border-radius:12px;
 
 function sendAlert(room){
 
+const now = new Date();
+
+const heure = now.toLocaleTimeString("fr-FR",{
+hour: '2-digit',
+minute: '2-digit'
+});
+
+const message =
+"🚨 **Demande d'aide**\n\n" +
+"📍 Salle : **" + room + "**\n" +
+"🕒 Heure : **" + heure + "**\n\n" +
+"🔧 Un technicien est prié d'aller intervenir.";
+
 fetch("https://discord.com/api/webhooks/1481982799941734490/p5T1XXeOfT0iS1MGwMd2ulGkG8sgKnfRc9HUynyIFHNHyCK_yMILmvchF4ehfFkK7Hao",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-content:"🆘 Demande d'aide dans " + room
+content: message
 })
 })
 
