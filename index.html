@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Demande d'aide</title>
+
+<style>
+body{
+font-family:sans-serif;
+text-align:center;
+margin-top:120px;
+background:#111;
+color:white;
+}
+
+button{
+font-size:28px;
+padding:30px 60px;
+background:red;
+color:white;
+border:none;
+border-radius:12px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🆘 Demande d'aide DETSIC</h1>
+
+<button onclick="sendAlert('Salle 1')">PCDSA
+</button>
+
+<script>
+
+function sendAlert(room){
+
+fetch("https://discord.com/api/webhooks/1481982799941734490/p5T1XXeOfT0iS1MGwMd2ulGkG8sgKnfRc9HUynyIFHNHyCK_yMILmvchF4ehfFkK7Hao",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+content:"🆘 Demande d'aide dans " + room
+})
+})
+
+alert("Demande envoyée")
+
+}
+
+</script>
+
+</body>
+</html>
