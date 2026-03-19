@@ -1,69 +1,271 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Demande d'aide DETSIC</title>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>Demande d'aide DETSIC</title>
 
-<style>
-body{
-font-family:sans-serif;
-text-align:center;
-margin-top:120px;
-background:#111;
-color:white;
-}
+  <style>
+    :root{
+      --bg-1:#0f1115;
+      --bg-2:#181c24;
+      --card:#202532;
+      --text:#f5f7fb;
+      --muted:#b7bfcc;
+      --accent:#ff3b30;
+      --accent-2:#ff6259;
+      --success:#1f8f4e;
+      --shadow:0 12px 30px rgba(0,0,0,.35);
+      --radius:22px;
+    }
 
-button{
-font-size:28px;
-padding:30px 60px;
-background:red;
-color:white;
-border:none;
-border-radius:12px;
-}
-</style>
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
 
+    html, body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, #2b3140 0%, var(--bg-2) 30%, var(--bg-1) 100%);
+      color:var(--text);
+    }
+
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .app{
+      width:100%;
+      max-width:520px;
+    }
+
+    .card{
+      background:rgba(32,37,50,.92);
+      backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px 18px 18px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.4px;
+      color:#ffd9d6;
+      background:rgba(255,59,48,.14);
+      border:1px solid rgba(255,98,89,.28);
+      padding:8px 12px;
+      border-radius:999px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0 0 10px 0;
+      font-size:clamp(28px, 6vw, 38px);
+      line-height:1.05;
+      letter-spacing:-0.02em;
+    }
+
+    .subtitle{
+      margin:0 0 20px 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    .status{
+      display:none;
+      margin:0 0 18px 0;
+      padding:14px 16px;
+      border-radius:16px;
+      font-weight:600;
+      font-size:15px;
+      line-height:1.4;
+    }
+
+    .status.success{
+      display:block;
+      background:rgba(31,143,78,.16);
+      border:1px solid rgba(31,143,78,.35);
+      color:#d7ffe6;
+    }
+
+    .status.error{
+      display:block;
+      background:rgba(255,59,48,.15);
+      border:1px solid rgba(255,59,48,.32);
+      color:#ffe0dd;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .room-btn{
+      appearance:none;
+      border:none;
+      border-radius:18px;
+      padding:18px 16px;
+      min-height:72px;
+      font-size:20px;
+      font-weight:800;
+      color:white;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:0 10px 22px rgba(255,59,48,.25);
+      cursor:pointer;
+      transition:transform .12s ease, opacity .15s ease, box-shadow .15s ease;
+    }
+
+    .room-btn:active{
+      transform:scale(.98);
+    }
+
+    .room-btn:disabled{
+      opacity:.65;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .footer{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .footer strong{
+      color:var(--text);
+    }
+
+    @media (min-width: 560px){
+      .card{
+        padding:28px 24px 22px;
+      }
+
+      .grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .room-btn:first-child{
+        grid-column:1 / -1;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="app">
+    <section class="card">
+      <div class="badge">🆘 Intervention DETSIC</div>
 
-<h1>🆘 Demande d'aide DETSIC V1</h1>
+      <h1>Demande d'aide</h1>
+      <p class="subtitle">
+        Sélectionnez la salle concernée pour envoyer immédiatement une alerte à l'équipe technique.
+      </p>
 
-<button onclick="sendAlert('PCDSA')">PCDSA
-</button>
+      <div id="status" class="status"></div>
 
-<script>
+      <div class="grid">
+        <button class="room-btn" onclick="sendAlert('PCDSA')">PCDSA</button>
+        <button class="room-btn" onclick="sendAlert('CMD3D')">CMD3D</button>
+        <button class="room-btn" onclick="sendAlert('ME')">ME</button>
+        <button class="room-btn" onclick="sendAlert('EDSS')">EDSS</button>
+        <button class="room-btn" onclick="sendAlert('COMDET')">COMDET</button>
+      </div>
 
-function sendAlert(room){
+      <div class="footer">
+        Après envoi, un technicien sera averti sur <strong>Discord</strong>.
+      </div>
+    </section>
+  </main>
 
-const now = new Date();
+  <script>
+    const WEBHOOK_URL = "TON_WEBHOOK_DISCORD";
+    let isSending = false;
 
-const heure = now.toLocaleTimeString("fr-FR",{
-hour: '2-digit',
-minute: '2-digit'
-});
+    function showStatus(message, type) {
+      const status = document.getElementById("status");
+      status.className = "status " + type;
+      status.textContent = message;
+    }
 
-const message =
-"🚨 **Demande d'aide**\n\n" +
-"📍 Salle : **" + room + "**\n" +
-"🕒 Heure : **" + heure + "**\n\n" +
-"🔧 Un technicien est prié d'aller intervenir.";
+    function setButtonsDisabled(disabled) {
+      document.querySelectorAll(".room-btn").forEach(btn => {
+        btn.disabled = disabled;
+      });
+    }
 
-fetch("https://discord.com/api/webhooks/1481982799941734490/p5T1XXeOfT0iS1MGwMd2ulGkG8sgKnfRc9HUynyIFHNHyCK_yMILmvchF4ehfFkK7Hao",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-content: message
-})
-})
+    async function sendAlert(room) {
+      if (isSending) return;
 
-alert("Demande envoyée")
+      isSending = true;
+      setButtonsDisabled(true);
+      showStatus("Envoi de la demande en cours...", "success");
 
-}
+      try {
+        const now = new Date();
 
-</script>
+        const heure = now.toLocaleTimeString("fr-FR", {
+          hour: "2-digit",
+          minute: "2-digit"
+        });
 
+        const date = now.toLocaleDateString("fr-FR");
+
+        const message =
+          "🚨 **Demande d'aide DETSIC**\n\n" +
+          "📍 **Salle :** " + room + "\n" +
+          "🕒 **Heure :** " + heure + "\n" +
+          "📅 **Date :** " + date + "\n\n" +
+          "🔧 Un technicien est prié d'aller intervenir.";
+
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            content: message
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur HTTP " + response.status);
+        }
+
+        showStatus("✅ Demande envoyée avec succès pour " + room + ".", "success");
+
+        if (navigator.vibrate) {
+          navigator.vibrate([120, 80, 120]);
+        }
+
+      } catch (error) {
+        showStatus("❌ Erreur lors de l'envoi. Réessayez.", "error");
+        console.error(error);
+      } finally {
+        setTimeout(() => {
+          isSending = false;
+          setButtonsDisabled(false);
+        }, 1500);
+      }
+    }
+  </script>
 </body>
 </html>
